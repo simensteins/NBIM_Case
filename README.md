@@ -29,17 +29,19 @@ After all stages, the system merges every layer of analysis into an excel sheet 
 
 ## Project structure
 
+```
 NBIM_Case/
-├── data/ # Input CSV files (NBIM + Custody)
-├── reports/ # JSON and Excel outputs
-├── drafted_tickets/ # Drafted custodian tickets (.txt/.md)
+├── data/                         # Input CSV files (NBIM + Custody)
+├── reports/                      # JSON and Excel outputs
+├── drafted_tickets/              # Drafted custodian tickets (.txt/.md)
 ├── src/
-│ ├── agents/
-│ │ ├── classifier_agent.py
-│ │ ├── prioritizer_agent.py
-│ │ └── remediation_agent.py
-│ ├── break_detector.py
-│ ├── write_to_excel.py
-│ ├── main.py # Orchestrates the entire pipeline
-│ └── data_prcessing.py
+│   ├── agents/
+│   │   ├── classifier_agent.py
+│   │   ├── prioritizer_agent.py
+│   │   └── remediation_agent.py
+│   ├── break_detector.py         # Rule-based break detector
+│   ├── write_to_excel.py         # Combines reports into an excel file
+│   ├── main.py                   # Orchestrates the entire pipeline
+│   └── data_prcessing.py
 └── README.md
+```
