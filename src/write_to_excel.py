@@ -75,8 +75,8 @@ def combine(df_a: pd.DataFrame, df_b: pd.DataFrame) -> pd.DataFrame:
     # Reorder columns (include only those that exist)
     col_order = [
         "priority","coac_event_key", "bank_account", "custodian", "organisation_name", "classification", "NET_AMOUNT_SC_DIFF", "SETTLEMENT_CURRENCY",
-        "description", "confidence",
-        "recommended_action", "notes",
+        "recommended_action","description", "confidence",
+         "notes",
     ]
     cols = [c for c in col_order if c in combined.columns]
     combined = combined[cols]
