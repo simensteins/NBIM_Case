@@ -8,14 +8,14 @@ Finally, all results are compiled into a single Excel report for transparency an
 
 ### Automated Reconciliation Detection
 
-Compares internal (NBIM) and external (custody) datasets using rule-based logic.
+Compares internal and external datasets using rule-based logic.
 Main focus is to detect differences in net cash.
 
 ### Multi-Agent Reasoning System
 
 The automation pipeline is powered by three specialized LLM-based agents:
 
-- Classifier Agent – analyzes each detected break and assigns a clear classification (e.g., AMOUNT_MISMATCH_TAX).
+- Classifier Agent – analyzes each detected break and assigns a clear classification, as well as the most likely reason of the break.
 - Prioritizer Agent – ranks reconciliation breaks by cash impact, confidence, and urgency.
 - Remediation Agent – drafts short, formal custodian tickets whenever the issue is external (custodian-side).
 
@@ -26,6 +26,25 @@ Each agent is designed for clarity, precision, and explainability, ensuring the 
 After all stages, the system merges every layer of analysis into an excel sheet with a structured overview of the findings for each reconciliation break.
 
 ## Pipeline overview
+
+```
+                    NBIM + Custody CSVs
+                            │
+                            ▼
+                    Rule-based detector   →  Detected breaks
+                            │
+                            ▼
+                    Classifier Agent      →  Classified breaks
+                            │
+                            ▼
+       ┌─────────────── parallel ────────────────┐
+       ▼                                         ▼
+Prioritizer Agent                          Remediation Agent
+→ Prioritized breaks                        → Drafted custodian tickets
+       │
+       ▼
+Excel Report
+```
 
 ## Project structure
 
