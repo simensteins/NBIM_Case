@@ -1,4 +1,3 @@
-# main.py
 import os
 import json
 from openai import OpenAI
@@ -40,7 +39,7 @@ async def main():
     # --- Prepare event objects ---
     events = get_events(nbim, custody)
     
-    
+
     # --- Detect breaks ---
     breaks = detect_breaks(events)
     print(f"Detected {len(breaks)} reconciliation breaks.")
