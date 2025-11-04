@@ -4,13 +4,13 @@
       "COAC_EVENT_KEY": 970456789,
       "BANK_ACCOUNT": 823456791,
       "priority": 1,
-      "reason": "Largest cash impact (CHF 4,030); clear 2,000-share entitlement error (custodian-likely), high confidence 0.93; pay date passed."
+      "reason": "Largest cash diff (CHF 4,030); pay date passed (29-Apr-2025); high confidence; quantity shortfall (no lending) — NBIM likely under-booked, correct internally to recover cash."
     },
     {
       "COAC_EVENT_KEY": 960789012,
       "BANK_ACCOUNT": 712345678,
       "priority": 2,
-      "reason": "Smaller cash impact (USD 342.77); tax-rate mismatch with lower confidence 0.72; cross-currency reversal flagged (adjustment likely); pay date passed."
+      "reason": "Smaller cash diff (USD 342.77); pay date passed (May-2025); tax-rate discrepancy (custody 20% vs NBIM ~25%); custodian confirmation needed."
     }
   ]
 }

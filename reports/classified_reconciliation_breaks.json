@@ -3,22 +3,21 @@
     "event_key": "960789012|712345678",
     "COAC_EVENT_KEY": 960789012,
     "BANK_ACCOUNT": 712345678,
-    "CUSTODIAN": "CUST/HSBCKR",
+    "CUSTODIAN": "HSBC_KOREA",
     "ORGANISATION_NAME": "Samsung Electronics Co Ltd",
     "classification": "AMOUNT_MISMATCH_TAX",
-    "description": "Custody paid net cash using a 20% tax rate, while NBIM accrued at 25% (22% WHT + ~3% local), resulting in higher custody net by roughly USD 343.",
-    "confidence": 0.72,
+    "description": "Custody net cash is higher because custodian applied 20% tax while NBIM booked a total ~25% (22% WHT + ~2.985% local). This drives USD 5,181.50 (NBIM) vs USD 5,524.27 (custody).",
+    "confidence": 0.87,
     "recommended_action": "DRAFT_CUSTODIAN_TICKET",
     "action_params": {
       "evidence": [
-        "NBIM NET_AMOUNT_SC: 5,181.50 USD; Custody NET_AMOUNT_SC: 5,524.27 USD; Diff: 342.77 USD",
-        "Both sides show DIV_RATE 361 KRW and NOMINAL_BASIS 25,000; Gross QC: 9,025,000 KRW",
-        "NBIM taxes: WTHTAX_RATE 22% (1,985,500 KRW) + LOCALTAX 269,550 KRW (~3%) -> NBIM NET_QC 6,769,950 KRW",
-        "Custody taxes: TAX_RATE 20%; TAX 1,805,000 KRW -> Custody NET_QC 7,220,000 KRW",
-        "Net QC gap: 450,050 KRW (~5% of gross), which drives the USD cash difference",
-        "Custody flags IS_CROSS_CURRENCY_REVERSAL = true; dates differ (NBIM Pay 20-May vs Custody Pay 25-May) but quantities match (25,000)"
+        "NBIM NET_AMOUNT_SC = 5,181.50 USD; Custody NET_AMOUNT_SC = 5,524.27 USD; Diff = 342.77 USD",
+        "NBIM taxes: WTHTAX_RATE 22% (WTHTAX_COST_QC 1,985,500) + local 269,550 (~2.985%) => NET_AMOUNT_QC 6,769,950 KRW",
+        "Custody taxes: TAX_RATE 20% (TAX 1,805,000) => NET_AMOUNT_QC 7,220,000 KRW",
+        "Both sides use DIV_RATE 361 and NOMINAL_BASIS 25,000; custody LOAN_QUANTITY 2,000 noted but gross based on full nominal on both sides (not the driver)",
+        "Dates mostly align; payment date differs (NBIM 20.05.2025 vs custody 25.05.2025) but mismatch is amount/tax-driven"
       ],
-      "notes": "Please confirm the correct Korean dividend withholding for KR7005930003 (Samsung Electronics) for this account. Custody appears to have applied 20% tax; NBIM accrued 22% WHT plus ~3% local (25% total). Is an additional local surtax applicable, or is a relief-at-source rate of 20% intended? Also advise if any adjustment is pending (IS_CROSS_CURRENCY_REVERSAL = true)."
+      "notes": "Please confirm the actual tax rate and breakdown applied by HSBC Korea for KR7005930003 dividend ex 31.03.2025. Custody shows 20% withholding (net USD 5,524.27) while NBIM booked 22% WHT + ~2.985% local (~25% total), net USD 5,181.50. Advise if treaty/relief was applied or if local surtax is not applicable. If 20% is correct, we will adjust NBIM booking; if not, please correct custody records/cash and provide details. Cross-currency reversal flag noted; please confirm it does not affect the net tax outcome."
     },
     "NET_AMOUNT_SC_DIFF": 342.77,
     "SETTLEMENT_CURRENCY": "USD"
@@ -30,19 +29,18 @@
     "CUSTODIAN": "CUST/UBSCH",
     "ORGANISATION_NAME": "Nestle SA",
     "classification": "QUANTITY_OR_LENDING_MISMATCH",
-    "description": "Custody calculated net cash on 12,000 shares while NBIM entitlement is 10,000; rates/tax match, so the net delta equals the extra 2,000 shares. Please correct the custody entitlement/booking.",
-    "confidence": 0.93,
-    "recommended_action": "DRAFT_CUSTODIAN_TICKET",
+    "description": "Custody paid on 12,000 shares while NBIM booked 10,000, with the same dividend rate and tax, resulting in CHF 4,030 more cash at custody. Dates and rates match; the variance is driven by entitlement quantity.",
+    "confidence": 0.9,
+    "recommended_action": "PROPOSE_NBIM_CORRECTION",
     "action_params": {
       "evidence": [
-        "NBIM NET_AMOUNT_SC 20,150.00 CHF vs Custody 24,180.00 CHF (diff 4,030.00 CHF)",
-        "NBIM NOMINAL_BASIS 10,000 vs Custody HOLDING_QUANTITY 12,000 (LOAN_QUANTITY 0, LENDING_PERCENTAGE 0%)",
-        "Custody NOMINAL_BASIS field shows 10,000 but amounts use 12,000 (internal inconsistency)",
-        "DIV_RATE 3.1 CHF; TAX_RATE 35% on both sides",
-        "Dates align: Ex 25-04-2025, Pay 29-04-2025; Currency CHF throughout",
-        "Calculation check: (12,000 - 10,000) * 3.1 * (1 - 0.35) = 4,030.00 CHF"
+        "NBIM NOMINAL_BASIS: 10,000; NBIM NET_AMOUNT_SC: 20,150 (10,000 x 3.1 x (1-35%))",
+        "Custody HOLDING_QUANTITY: 12,000; Custody GROSS_AMOUNT_QC: 37,200 and NET_AMOUNT_SC: 24,180 (12,000 x 3.1 x (1-35%))",
+        "DIV_RATE: 3.1; TAX_RATE: 35%; Settlement currency: CHF",
+        "Difference equals 2,000 shares x 3.1 x (1-35%) = CHF 4,030",
+        "Event dates align (Ex 25.04.2025, Pay 29.04.2025); no lending reported (LOAN_QUANTITY 0)"
       ],
-      "notes": "Please confirm record-date entitlement quantity and adjust/reverse the excess 2,000-share booking so net matches 10,000 shares. LOAN_QUANTITY is 0, so lending does not explain the variance. Also clarify the separate 'Possible Restitution Amount' 4,500 CHF; if applicable, please advise via a separate instruction."
+      "notes": "NBIM likely under-booked entitlement by 2,000 shares. Please verify record-date holdings/transfers and update the entitlement or book a supplemental receipt for CHF 4,030. Note custody shows NOMINAL_BASIS 10,000 but amounts reflect 12,000; validate with UBS if needed."
     },
     "NET_AMOUNT_SC_DIFF": 4030.0,
     "SETTLEMENT_CURRENCY": "CHF"

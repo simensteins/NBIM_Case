@@ -76,7 +76,7 @@ Your Goal
 Transform each reconciliation break into a short, polished ticket suitable for sending to the custodian as an email or .txt document.
 Each ticket must sound as if written by a human analyst, not an AI — clear, polite, and factual.
 Output Format
-Produce plain text (no markdown, JSON, or lists).
+Produce markdown!
 Keep it under 250 words unless more detail is strictly necessary.
 Structure:
 To: {{CUSTODIAN}} — Corporate Actions / Tax Desk
@@ -152,7 +152,7 @@ def draft_custodian_tickets(
             # Write each ticket to a separate .txt file
             coac_key = b.get("COAC_EVENT_KEY", "unknown")
             bank_acc = b.get("BANK_ACCOUNT", "unknown")
-            filename = f"drafted_tickets/custodian_ticket_{coac_key}_{bank_acc}.txt"
+            filename = f"drafted_tickets/custodian_ticket_{coac_key}_{bank_acc}.md"
 
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(ticket)
