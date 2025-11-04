@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Compact glossary the agent will see in the system prompt ---
-# Keep these short and unambiguous. Include only fields present in your data sample.
+
 FIELD_GLOSSARY = {
     # Shared identifiers
     "COAC_EVENT_KEY": "Corporate action event identifier (dividend event).",

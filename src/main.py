@@ -13,7 +13,7 @@ from write_to_excel import combine_and_export
 
 
 async def run_both(items: list):
-    """Run both agents concurrently, whether they are sync or async."""
+    # Run both agents concurrently
     
     prioritize_task = asyncio.create_task(asyncio.to_thread(prioritize_breaks, items))
     draft_task = asyncio.create_task(asyncio.to_thread(draft_custodian_tickets, items))
