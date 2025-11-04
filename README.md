@@ -9,7 +9,7 @@ Finally, all results are compiled into a single Excel report for transparency an
 ### Automated Reconciliation Detection
 
 Compares internal and external datasets using rule-based logic.
-Main focus is to detect differences in net cash.
+Main focus is to detect differences in net cash. Filters out dividend events that should be processed by the LLM-agents.
 
 ### Multi-Agent Reasoning System
 
