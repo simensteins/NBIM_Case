@@ -67,7 +67,9 @@ def combine(df_a: pd.DataFrame, df_b: pd.DataFrame) -> pd.DataFrame:
     # Make key names consistent with the rest of the code (lowercase)
     combined = combined.rename(columns={
         "COAC_EVENT_KEY": "coac_event_key",
-        "BANK_ACCOUNT": "bank_account"
+        "BANK_ACCOUNT": "bank_account",
+        "CUSTODIAN": "custodian",
+        "ORGANISATION_NAME": "organisation_name",
     })
 
     # Reorder columns (include only those that exist)

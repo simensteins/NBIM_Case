@@ -82,3 +82,25 @@ def rows_for_key(df: pd.DataFrame, key_cols, key_tuple):
              for c, v in row.items()}
         recs.append(d)
     return recs
+
+def get_events(nbim, custody):
+    events = []
+    key_cols, keys = get_all_keys(nbim, custody)
+    for key_tuple in keys:
+        nb_rows = rows_for_key(nbim, key_cols, key_tuple)
+        cu_rows = rows_for_key(custody, key_cols, key_tuple)
+
+        # Convert from list → dict
+        nb_row = nb_rows[0] if nb_rows else None
+        cu_row = cu_rows[0] if cu_rows else None
+
+        # Create a readable label: coac_key|bank_account
+        key_label = "|".join(str(v) for v in key_tuple)
+
+        events.append({
+            "event_key": key_label,
+            "key_tuple": key_tuple,
+            "nbim_rows": nb_row,
+            "custody_rows": cu_row,
+        })
+    return events

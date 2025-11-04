@@ -5,7 +5,7 @@ from openai import OpenAI
 import pandas as pd
 import asyncio
 import time
-from data_prcessing import load_csv, normalize_columns, get_all_keys, rows_for_key
+from data_prcessing import load_csv, normalize_columns, get_events
 from break_detector import detect_breaks
 from agents.classifier_agent import classify_reconciliation_breaks
 from agents.prioritizer_agent import prioritize_breaks
@@ -36,30 +36,11 @@ async def main():
     nbim, custody = normalize_columns(nbim, custody)
 
 
-    # --- Identify shared event keys ---
-    key_cols, keys = get_all_keys(nbim, custody)
-
 
     # --- Prepare event objects ---
-    events = []
-    for key_tuple in keys:
-        nb_rows = rows_for_key(nbim, key_cols, key_tuple)
-        cu_rows = rows_for_key(custody, key_cols, key_tuple)
-
-        # Convert from list → dict
-        nb_row = nb_rows[0] if nb_rows else None
-        cu_row = cu_rows[0] if cu_rows else None
-
-        # Create a readable label like "EVENT12345|ACC_NO123"
-        key_label = "|".join(str(v) for v in key_tuple)
-
-        events.append({
-            "event_key": key_label,
-            "key_tuple": key_tuple,
-            "nbim_rows": nb_row,
-            "custody_rows": cu_row,
-        })
-
+    events = get_events(nbim, custody)
+    
+    
     # --- Detect breaks ---
     breaks = detect_breaks(events)
     print(f"Detected {len(breaks)} reconciliation breaks.")

@@ -70,6 +70,7 @@ Key signal: absolute NET_AMOUNT_SC_DIFF (cash impact).
 Also consider: classification type, confidence, whether PAY_DATE has passed, and any lending/quantity hints.
 Return a sorted list (highest priority first), assigning each a priority and a brief reason. No break should have the same priority.
 Return strict JSON array.
+Keep it cosise and to the point.
 
 
 
@@ -119,19 +120,6 @@ def prioritize_breaks(
         parsed = json.loads(content)
 
         return parsed
-
-        # Merge priorities and reasons back into input breaks
-        output = []
-        lookup = {(str(x["coac_event_key"]), str(x["bank_account"])): x for x in parsed}
-
-        for b in breaks:
-            key = (str(b["coac_event_key"]), str(b["bank_account"]))
-            prio = lookup.get(key, {})
-            b["priority"] = prio.get("priority", None)
-            b["priority_reason"] = prio.get("reason", "No reason given")
-            output.append(b)
-
-        return output
 
     except Exception as e:
         print(f"Error in prioritize_breaks: {e}")

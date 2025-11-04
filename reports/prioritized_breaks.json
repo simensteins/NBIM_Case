@@ -4,13 +4,13 @@
       "COAC_EVENT_KEY": 970456789,
       "BANK_ACCOUNT": 823456791,
       "priority": 1,
-      "reason": "Largest cash delta (CHF 4,030); custody paid on 12k vs 10k shares (quantity error); pay date passed—urgent reversal/adjustment."
+      "reason": "Largest cash gap (~CHF 4,030); custody paid on 12k while NOMINAL_BASIS shows 10k (LOAN 0); high confidence; pay date passed—custodian fix likely."
     },
     {
       "COAC_EVENT_KEY": 960789012,
       "BANK_ACCOUNT": 712345678,
       "priority": 2,
-      "reason": "Smaller cash delta (USD 342.77); tax-rate mismatch (custody 20% vs NBIM ~25%); pay date passed—seek tax correction."
+      "reason": "Smaller gap (~USD 343); tax-rate mismatch (NBIM ~25% vs custody 20%); confidence 0.76; pay date passed—likely NBIM correction."
     }
   ]
 }
